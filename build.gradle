@@ -1,0 +1,33 @@
+plugins {
+  id 'base'
+}
+
+group = 'com.kickoff'
+version = '0.0.1-SNAPSHOT'
+
+allprojects {
+  group = rootProject.group
+  version = rootProject.version
+
+  repositories {
+    mavenCentral()
+  }
+}
+
+subprojects {
+  plugins.withId('java') {
+    java {
+      toolchain {
+        languageVersion = JavaLanguageVersion.of(java_version.toInteger())
+      }
+    }
+
+    dependencies {
+      implementation "org.projectlombok:lombok:${projectlombok_version}"
+      annotationProcessor "org.projectlombok:lombok:${projectlombok_version}"
+      implementation "org.springframework.boot:spring-boot-starter-logging:${springboot_version}"
+
+      testImplementation "org.springframework.boot:spring-boot-starter-test:${springboot_version}"
+    }
+  }
+}
