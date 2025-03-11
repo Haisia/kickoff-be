@@ -1,0 +1,26 @@
+package com.kickoff.service.league.adapter.externalapi.rapid.adapter;
+
+import com.kickoff.service.league.adapter.externalapi.rapid.client.LeagueExternalApiClient;
+import com.kickoff.service.league.adapter.externalapi.rapid.dto.leagues.LeaguesResponse;
+import com.kickoff.service.league.domain.entity.League;
+import com.kickoff.service.league.domain.port.output.externalapi.LeagueExternalApiService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@RequiredArgsConstructor
+@Service
+public class LeagueExternalApiServiceImpl implements LeagueExternalApiService {
+
+  private final LeagueExternalApiClient leagueExternalApiClient;
+
+  @Override
+  public List<League> getAllLeagues() {
+    return leagueExternalApiClient.requestLeagues()
+      .stream()
+      .map(LeaguesResponse::toLeague)
+      .collect(Collectors.toList());
+  }
+}

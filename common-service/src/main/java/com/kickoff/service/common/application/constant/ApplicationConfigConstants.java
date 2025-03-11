@@ -1,4 +1,4 @@
-package com.kickoff.service.common.constant;
+package com.kickoff.service.common.application.constant;
 
 import java.util.List;
 
