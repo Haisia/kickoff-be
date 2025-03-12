@@ -3,6 +3,7 @@ package com.kickoff.service.common.domain.entity;
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.PrePersist;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -19,6 +20,13 @@ public abstract class BaseEntity {
   protected LocalDateTime createdAt;
 
   @LastModifiedDate
-  @Column(insertable = false)
+  @Column
   protected LocalDateTime updatedAt;
+
+  @PrePersist
+  protected void onCreate() {
+    if (updatedAt == null) {
+      updatedAt = LocalDateTime.now();
+    }
+  }
 }
