@@ -29,6 +29,10 @@ public class League extends AggregateRoot {
 
   @ElementCollection
   @CollectionTable(name = "league_logos", joinColumns = @JoinColumn(name = "league_id"))
+  @AttributeOverrides({
+    @AttributeOverride(name = "url", column = @Column(name = "logo_url")),
+    @AttributeOverride(name = "urlType", column = @Column(name = "logo_type"))
+  })
   private List<Logo> logos = new ArrayList<>();
 
   @Embedded
