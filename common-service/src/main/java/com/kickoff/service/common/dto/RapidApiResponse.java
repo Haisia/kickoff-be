@@ -1,4 +1,4 @@
-package com.kickoff.service.league.adapter.externalapi.rapid.dto;
+package com.kickoff.service.common.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

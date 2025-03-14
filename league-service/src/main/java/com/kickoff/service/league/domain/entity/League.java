@@ -1,10 +1,11 @@
 package com.kickoff.service.league.domain.entity;
 
 import com.kickoff.service.common.domain.entity.AggregateRoot;
+import com.kickoff.service.common.domain.vo.TeamId;
+import com.kickoff.service.common.domain.vo.UrlInfo;
 import com.kickoff.service.common.domain.vo.LeagueId;
 import com.kickoff.service.league.domain.vo.Country;
 import com.kickoff.service.league.domain.vo.LeagueType;
-import com.kickoff.service.league.domain.vo.Logo;
 import com.kickoff.service.league.domain.vo.SeasonId;
 import jakarta.persistence.*;
 import lombok.*;
@@ -14,6 +15,7 @@ import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter @Setter
@@ -33,7 +35,7 @@ public class League extends AggregateRoot {
     @AttributeOverride(name = "url", column = @Column(name = "logo_url")),
     @AttributeOverride(name = "urlType", column = @Column(name = "logo_type"))
   })
-  private List<Logo> logos = new ArrayList<>();
+  private List<UrlInfo> logos = new ArrayList<>();
 
   @Embedded
   private Country country;
@@ -51,7 +53,7 @@ public class League extends AggregateRoot {
     this.country = country;
   }
 
-  public void addLogo(Logo logo) {
+  public void addLogo(UrlInfo logo) {
     if (logo == null) return;
     if (logos.contains(logo)) return;
     logos.add(logo);
@@ -69,6 +71,20 @@ public class League extends AggregateRoot {
       .build();
 
     seasons.add(createdSeason);
+  }
+
+  public void addTeam(Year year, TeamId teamId) {
+    if (year == null || teamId == null) return;
+    Season season = getSeason(year).orElseThrow();
+    season.addTeam(teamId);
+  }
+
+  public Optional<Season> getSeason(Year year) {
+    if (year == null) return Optional.empty();
+    return seasons.stream()
+      .filter(season -> season.getId().getYear().equals(year))
+      .findFirst()
+      ;
   }
 
   @Override

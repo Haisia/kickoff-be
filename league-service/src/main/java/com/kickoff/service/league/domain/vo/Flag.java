@@ -1,6 +1,7 @@
 package com.kickoff.service.league.domain.vo;
 
 import com.kickoff.service.common.domain.vo.BaseVo;
+import com.kickoff.service.common.domain.vo.UrlType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EnumType;

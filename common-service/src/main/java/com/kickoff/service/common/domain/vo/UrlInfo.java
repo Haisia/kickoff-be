@@ -1,6 +1,5 @@
-package com.kickoff.service.league.domain.vo;
+package com.kickoff.service.common.domain.vo;
 
-import com.kickoff.service.common.domain.vo.BaseVo;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -13,7 +12,7 @@ import java.util.Objects;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Embeddable
-public class Logo extends BaseVo {
+public class UrlInfo extends BaseVo {
   private String url;
   @Enumerated(EnumType.STRING)
   private UrlType urlType;
@@ -21,8 +20,8 @@ public class Logo extends BaseVo {
   @Override
   public boolean equals(Object o) {
     if (o == null || getClass() != o.getClass()) return false;
-    Logo logo = (Logo) o;
-    return Objects.equals(url, logo.url);
+    UrlInfo urlInfo = (UrlInfo) o;
+    return Objects.equals(url, urlInfo.url);
   }
 
   @Override

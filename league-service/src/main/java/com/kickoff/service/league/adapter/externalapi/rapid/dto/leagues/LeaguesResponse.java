@@ -1,5 +1,7 @@
 package com.kickoff.service.league.adapter.externalapi.rapid.dto.leagues;
 
+import com.kickoff.service.common.domain.vo.UrlInfo;
+import com.kickoff.service.common.domain.vo.UrlType;
 import com.kickoff.service.league.domain.entity.League;
 import com.kickoff.service.league.domain.vo.*;
 import lombok.AllArgsConstructor;
@@ -38,7 +40,7 @@ public class LeaguesResponse {
         .name(name)
         .type(LeagueType.fromValue(type))
         .build();
-      createdLeague.addLogo(new Logo(logo, UrlType.EXTERNAL));
+      createdLeague.addLogo(new UrlInfo(logo, UrlType.EXTERNAL));
       return createdLeague;
     }
   }

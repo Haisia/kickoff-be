@@ -1,14 +1,17 @@
 package com.kickoff.service.league.domain.service;
 
+import com.kickoff.service.common.dto.InitTeamsCommand;
 import com.kickoff.service.league.domain.entity.League;
 import com.kickoff.service.league.domain.entity.Season;
 import com.kickoff.service.league.domain.port.input.command.LeagueCommandService;
 import com.kickoff.service.league.domain.port.output.externalapi.LeagueExternalApiService;
 import com.kickoff.service.league.domain.port.output.repository.LeagueRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cloud.stream.function.StreamBridge;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Year;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -20,6 +23,7 @@ public class LeagueCommandServiceImpl implements LeagueCommandService {
 
   private final LeagueExternalApiService leagueExternalApiService;
   private final LeagueRepository leagueRepository;
+  private final StreamBridge streamBridge;
 
   @Override
   public void initLeague() {
@@ -46,6 +50,23 @@ public class LeagueCommandServiceImpl implements LeagueCommandService {
         if (hasDuplicateSeason) continue;
         leagueRepository.save(league);
       }
+    }
+  }
+
+  @Override
+  public void fetchSeasonsForInitTeams(InitTeamsCommand initTeamsCommand) {
+    leagueRepository.findByApiFootballLeagueId((long) initTeamsCommand.getApiFootballLeagueId())
+      .orElseThrow()
+      .getSeasons()
+      .forEach(season -> initTeamsCommand.addSeason(season.getId().getYear()));
+    streamBridge.send("init-teams", initTeamsCommand);
+  }
+
+  @Override
+  public void initSeasonMapTeams(InitTeamsCommand initTeamsCommand) {
+    League league = leagueRepository.findByApiFootballLeagueId((long) initTeamsCommand.getApiFootballLeagueId()).orElseThrow();
+    for (Year year : initTeamsCommand.getYears()) {
+      initTeamsCommand.getTeams(year).forEach(teamId -> league.addTeam(year, teamId));
     }
   }
 }

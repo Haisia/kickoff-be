@@ -30,6 +30,21 @@ spring:
     port: 5672
     username: guestuser
     password: guestuser
+    listener:
+      simple:
+        acknowledge-mode: auto
+
+  cloud:
+    function:
+      definition: initTeams
+    stream:
+      bindings:
+        initTeams-in-0:
+          destination: init-teams
+#          group: ${spring.application.name}
+          group: team-service
+        initSeasonMapTeams-out-0:
+          destination: init-season-map-teams
 
   data:
     redis:
