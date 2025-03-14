@@ -22,6 +22,11 @@ public class Venue extends BaseEntity {
   private String city;
   private Long capacity;
   private String surface;
+
+  @AttributeOverrides({
+    @AttributeOverride(name = "url", column = @Column(name = "image_url")),
+    @AttributeOverride(name = "urlType", column = @Column(name = "image_url_type"))
+  })
   private UrlInfo image;
 
   @ManyToOne
