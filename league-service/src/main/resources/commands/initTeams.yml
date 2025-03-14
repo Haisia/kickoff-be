@@ -1,0 +1,14 @@
+spring:
+  cloud:
+    function:
+      definition: fetchSeasonsForInitTeams;initSeasonMapTeams
+    stream:
+      bindings:
+        fetchSeasonsForInitTeams-in-0:
+          destination: fetch-seasons-for-init-teams
+          group: team-service
+        initTeams-out-0:
+          destination: init-teams
+        initSeasonMapTeams-in-0:
+          destination: init-season-map-teams
+          group: team-service

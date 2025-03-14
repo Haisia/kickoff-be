@@ -12,6 +12,10 @@ spring:
   application:
     name: team-service
 
+  config:
+    import:
+      - classpath:commands/initTeams.yml
+
   jpa:
     open-in-view: false
     show-sql: true
@@ -33,18 +37,6 @@ spring:
     listener:
       simple:
         acknowledge-mode: auto
-
-  cloud:
-    function:
-      definition: initTeams
-    stream:
-      bindings:
-        initTeams-in-0:
-          destination: init-teams
-#          group: ${spring.application.name}
-          group: team-service
-        initSeasonMapTeams-out-0:
-          destination: init-season-map-teams
 
   data:
     redis:

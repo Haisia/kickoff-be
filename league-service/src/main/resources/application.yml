@@ -12,6 +12,10 @@ spring:
   application:
     name: league-service
 
+  config:
+    import:
+      - classpath:commands/initTeams.yml
+
   jpa:
     open-in-view: false
     show-sql: true
@@ -33,21 +37,6 @@ spring:
     listener:
       simple:
         acknowledge-mode: auto
-
-  cloud:
-    function:
-      definition: fetchSeasonsForInitTeams;initSeasonMapTeams
-    stream:
-      bindings:
-        fetchSeasonsForInitTeams-in-0:
-          destination: fetch-seasons-for-init-teams
-#          group: ${spring.application.name}
-          group: team-service
-        initTeams-out-0:
-          destination: init-teams
-        initSeasonMapTeams-in-0:
-          destination: init-season-map-teams
-          group: team-service
 
   data:
     redis:
