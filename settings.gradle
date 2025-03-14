@@ -3,3 +3,5 @@ rootProject.name = 'backend'
 include 'common-service'
 include 'league-service'
 include 'team-service'
+include 'fixture-service'
+
