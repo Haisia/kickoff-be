@@ -1,7 +1,9 @@
 spring:
   cloud:
     function:
-      definition: initFixtures;persistFixturesForInitFixtures
+      definition: >
+        initFixtures;
+        persistFixturesForInitFixtures
     stream:
       default:
         contentType: application/json

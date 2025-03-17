@@ -1,6 +1,5 @@
 package com.kickoff.service.common.dto;
 
-import com.kickoff.service.common.domain.vo.FixtureId;
 import com.kickoff.service.common.domain.vo.LeagueId;
 import com.kickoff.service.common.domain.vo.TeamId;
 import lombok.AllArgsConstructor;
@@ -30,7 +29,7 @@ public class InitFixturesCommand {
     teamIdMap.add(new TeamIdMap(teamId, apiFootballFixtureId));
   }
 
-  public void addFixturesToSeason(Year year, List<FixtureId> fixtures) {
+  public void addFixturesToSeason(Year year, List<Long> fixtures) {
     if (seasons == null) seasons = new ArrayList<>();
     seasons.stream()
       .filter(season -> season.getYear().equals(year))
@@ -46,7 +45,7 @@ public class InitFixturesCommand {
     return years;
   }
 
-  public List<FixtureId> getFixtures(Year year) {
+  public List<Long> getFixtures(Year year) {
     if (seasons == null) return new ArrayList<>();
     return seasons.stream()
       .filter(season -> season.getYear().equals(year))
@@ -59,7 +58,7 @@ public class InitFixturesCommand {
   @Data
   private static class Season {
     private Year year;
-    private List<FixtureId> fixtures = new ArrayList<>();
+    private List<Long> fixtures = new ArrayList<>();
   }
 
   @NoArgsConstructor @AllArgsConstructor

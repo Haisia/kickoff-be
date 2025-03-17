@@ -17,8 +17,8 @@ public class SeasonFunction {
   }
 
   @Bean
-  public Consumer<InitTeamsCommand> initSeasonMapTeams(LeagueCommandService leagueCommandService) {
-    return leagueCommandService::initSeasonMapTeams;
+  public Consumer<InitTeamsCommand> persistSeasonMapTeamsForInitTeams(LeagueCommandService leagueCommandService) {
+    return leagueCommandService::persistSeasonMapTeamsForInitTeams;
   }
 
   @Bean

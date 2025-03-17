@@ -21,11 +21,10 @@ public class InitTeamsUseCase {
       .orElseThrow();
     initTeamsCommand.setLeagueId(league.getId());
     league.getSeasons().forEach(season -> initTeamsCommand.addSeason(season.getId().getYear()));
-    streamBridge.send("init-teams", initTeamsCommand);
+    streamBridge.send("persist-teams-for-init-teams", initTeamsCommand);
   }
 
-  // init -> persist?
-  public void initSeasonMapTeams(InitTeamsCommand initTeamsCommand) {
+  public void persistSeasonMapTeamsForInitTeams(InitTeamsCommand initTeamsCommand) {
     League league = leagueRepository.findByApiFootballLeagueId((long) initTeamsCommand.getApiFootballLeagueId()).orElseThrow();
     for (Year year : initTeamsCommand.getYears()) {
       initTeamsCommand.getTeams(year).forEach(teamId -> league.addTeam(year, teamId));

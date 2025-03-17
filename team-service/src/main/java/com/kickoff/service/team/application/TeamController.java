@@ -20,7 +20,7 @@ public class TeamController {
 
   @PostMapping("/init")
   public ResponseEntity<?> initTeam() {
-    teamCommandService.initTeamsAndSeasons();
+    teamCommandService.initTeams();
 
     return ResponseEntity.status(HttpStatus.OK).body(null);
   }

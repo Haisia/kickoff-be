@@ -26,7 +26,7 @@ public class InitFixturesUseCase {
   public void updateSeasons(InitFixturesCommand initFixturesCommand) {
     League league = leagueRepository.findById(initFixturesCommand.getLeagueId()).orElseThrow();
     for (Year year : initFixturesCommand.getYears()) {
-      initFixturesCommand.getFixtures(year).forEach(fixtureId -> league.addFixture(year, fixtureId));
+      initFixturesCommand.getFixtures(year).forEach(apiFootballFixtureId -> league.addFixture(year, apiFootballFixtureId));
     }
   }
 }

@@ -1,7 +1,11 @@
 spring:
   cloud:
     function:
-      definition: fetchSeasonsForInitFixtures;fetchSeasonsForInitTeams;updateSeasonsForInitFixtures;initSeasonMapTeams
+      definition: >
+        fetchSeasonsForInitFixtures;
+        fetchSeasonsForInitTeams;
+        updateSeasonsForInitFixtures;
+        initSeasonMapTeams
     stream:
       default:
         contentType: application/json
@@ -12,14 +16,15 @@ spring:
         fetchTeamsForInitFixtures-out-0:
           destination: fetch-teams-for-init-fixtures
           group: init-fixtures
-        fetchSeasonsForInitTeams-in-0:
-          destination: fetch-seasons-for-init-teams
-          group: team-service
         updateSeasonsForInitFixtures-in-0:
           destination: update-seasons-for-init-fixtures
           group: init-fixtures
-        initTeams-out-0:
-          destination: init-teams
-        initSeasonMapTeams-in-0:
-          destination: init-season-map-teams
-          group: team-service
+        persistTeamsForInitTeams-out-0:
+          destination: persist-teams-for-init-teams
+
+        fetchSeasonsForInitTeams-in-0:
+          destination: fetch-seasons-for-init-teams
+          group: init-teams
+        persistSeasonMapTeamsForInitTeams-in-0:
+          destination: persist-season-map-teams-for-init-teams
+          group: init-teams

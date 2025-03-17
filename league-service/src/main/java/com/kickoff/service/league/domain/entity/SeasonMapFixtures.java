@@ -1,7 +1,6 @@
 package com.kickoff.service.league.domain.entity;
 
 import com.kickoff.service.common.domain.entity.BaseEntity;
-import com.kickoff.service.common.domain.vo.FixtureId;
 import com.kickoff.service.league.domain.vo.SeasonId;
 import com.kickoff.service.league.domain.vo.SeasonMapFixturesId;
 import jakarta.persistence.*;
@@ -29,9 +28,9 @@ public class SeasonMapFixtures extends BaseEntity {
   })
   private Season season;
 
-  public SeasonMapFixtures(SeasonId seasonId, FixtureId fixtureId, Season season) {
-    if (seasonId == null || fixtureId == null) return;
-    this.id = SeasonMapFixturesId.of(seasonId, fixtureId);
+  public SeasonMapFixtures(SeasonId seasonId, Long apiFootballFixtureId, Season season) {
+    if (seasonId == null || apiFootballFixtureId == null) return;
+    this.id = SeasonMapFixturesId.of(seasonId, apiFootballFixtureId);
     this.season = season;
   }
 

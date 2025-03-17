@@ -12,8 +12,8 @@ import java.util.function.Consumer;
 public class TeamFunction {
 
   @Bean
-  public Consumer<InitTeamsCommand> initTeams(TeamCommandService teamCommandService) {
-    return teamCommandService::initTeams;
+  public Consumer<InitTeamsCommand> persistTeamsForInitTeams(TeamCommandService teamCommandService) {
+    return teamCommandService::persistTeamsForInitTeams;
   }
 
   @Bean

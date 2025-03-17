@@ -1,10 +1,9 @@
 package com.kickoff.service.league.domain.entity;
 
 import com.kickoff.service.common.domain.entity.AggregateRoot;
-import com.kickoff.service.common.domain.vo.FixtureId;
+import com.kickoff.service.common.domain.vo.LeagueId;
 import com.kickoff.service.common.domain.vo.TeamId;
 import com.kickoff.service.common.domain.vo.UrlInfo;
-import com.kickoff.service.common.domain.vo.LeagueId;
 import com.kickoff.service.league.domain.vo.Country;
 import com.kickoff.service.league.domain.vo.LeagueType;
 import com.kickoff.service.league.domain.vo.SeasonId;
@@ -96,9 +95,9 @@ public class League extends AggregateRoot {
     return result;
   }
 
-  public void addFixture(Year year, FixtureId fixtureId) {
+  public void addFixture(Year year, Long apiFootballFixtureId) {
     Season season = getSeason(year).orElseThrow();
-    season.addFixture(fixtureId);
+    season.addFixture(apiFootballFixtureId);
   }
 
   @Override

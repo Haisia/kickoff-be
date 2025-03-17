@@ -30,8 +30,8 @@ public class LeagueCommandServiceImpl implements LeagueCommandService {
   }
 
   @Override
-  public void initSeasonMapTeams(InitTeamsCommand initTeamsCommand) {
-    initTeamsUseCase.initSeasonMapTeams(initTeamsCommand);
+  public void persistSeasonMapTeamsForInitTeams(InitTeamsCommand initTeamsCommand) {
+    initTeamsUseCase.persistSeasonMapTeamsForInitTeams(initTeamsCommand);
   }
 
   @Override

@@ -1,7 +1,6 @@
 package com.kickoff.service.league.domain.entity;
 
 import com.kickoff.service.common.domain.entity.BaseEntity;
-import com.kickoff.service.common.domain.vo.FixtureId;
 import com.kickoff.service.common.domain.vo.TeamId;
 import com.kickoff.service.league.domain.vo.SeasonId;
 import jakarta.persistence.*;
@@ -57,16 +56,16 @@ public class Season extends BaseEntity {
       .findFirst();
   }
 
-  public void addFixture(FixtureId fixtureId) {
-    if (fixtureId == null) return;
-    if (getFixture(fixtureId).isPresent()) return;
-    fixtures.add(new SeasonMapFixtures(id, fixtureId, this));
+  public void addFixture(Long apiFootballFixtureId) {
+    if (apiFootballFixtureId == null) return;
+    if (getFixture(apiFootballFixtureId).isPresent()) return;
+    fixtures.add(new SeasonMapFixtures(id, apiFootballFixtureId, this));
   }
 
-  public Optional<SeasonMapFixtures> getFixture(FixtureId fixtureId) {
-    if (fixtureId == null) return Optional.empty();
+  public Optional<SeasonMapFixtures> getFixture(Long apiFootballFixtureId) {
+    if (apiFootballFixtureId == null) return Optional.empty();
     return fixtures.stream()
-      .filter(fixture -> fixture.getId().getFixtureId().equals(fixtureId))
+      .filter(fixture -> fixture.getId().getApiFootballFixtureId().equals(apiFootballFixtureId))
       .findFirst();
   }
 

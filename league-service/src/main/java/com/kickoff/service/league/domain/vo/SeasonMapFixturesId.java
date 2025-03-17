@@ -1,7 +1,6 @@
 package com.kickoff.service.league.domain.vo;
 
 import com.kickoff.service.common.domain.vo.BaseId;
-import com.kickoff.service.common.domain.vo.FixtureId;
 import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -14,26 +13,26 @@ import java.util.Objects;
 @Embeddable
 public class SeasonMapFixturesId extends BaseId {
   private SeasonId seasonId;
-  private FixtureId fixtureId;
+  private Long apiFootballFixtureId;
 
-  protected SeasonMapFixturesId(SeasonId seasonId, FixtureId fixtureId) {
+  protected SeasonMapFixturesId(SeasonId seasonId, Long apiFootballFixtureId) {
     this.seasonId = seasonId;
-    this.fixtureId = fixtureId;
+    this.apiFootballFixtureId = apiFootballFixtureId;
   }
 
-  public static SeasonMapFixturesId of(SeasonId seasonId, FixtureId fixtureId) {
-    return new SeasonMapFixturesId(seasonId, fixtureId);
+  public static SeasonMapFixturesId of(SeasonId seasonId, Long apiFootballFixtureId) {
+    return new SeasonMapFixturesId(seasonId, apiFootballFixtureId);
   }
 
   @Override
   public boolean equals(Object o) {
     if (o == null || getClass() != o.getClass()) return false;
     SeasonMapFixturesId that = (SeasonMapFixturesId) o;
-    return Objects.equals(seasonId, that.seasonId) && Objects.equals(fixtureId, that.fixtureId);
+    return Objects.equals(seasonId, that.seasonId) && Objects.equals(apiFootballFixtureId, that.apiFootballFixtureId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(seasonId, fixtureId);
+    return Objects.hash(seasonId, apiFootballFixtureId);
   }
 }
