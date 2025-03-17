@@ -1,6 +1,7 @@
 package com.kickoff.service.league.domain.entity;
 
 import com.kickoff.service.common.domain.entity.BaseEntity;
+import com.kickoff.service.common.domain.vo.FixtureId;
 import com.kickoff.service.common.domain.vo.TeamId;
 import com.kickoff.service.league.domain.vo.SeasonId;
 import jakarta.persistence.*;
@@ -31,6 +32,9 @@ public class Season extends BaseEntity {
   @OneToMany(mappedBy = "season", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   private List<SeasonMapTeams> affiliatedTeams = new ArrayList<>();
 
+  @OneToMany(mappedBy = "season", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  private List<SeasonMapFixtures> fixtures = new ArrayList<>();
+
   @Builder
   public Season(SeasonId id, League league, LocalDate startDate, LocalDate endDate) {
     if (id == null) return;
@@ -50,6 +54,19 @@ public class Season extends BaseEntity {
     if (teamId == null) return Optional.empty();
     return affiliatedTeams.stream()
       .filter(team -> team.getId().getTeamId().equals(teamId))
+      .findFirst();
+  }
+
+  public void addFixture(FixtureId fixtureId) {
+    if (fixtureId == null) return;
+    if (getFixture(fixtureId).isPresent()) return;
+    fixtures.add(new SeasonMapFixtures(id, fixtureId, this));
+  }
+
+  public Optional<SeasonMapFixtures> getFixture(FixtureId fixtureId) {
+    if (fixtureId == null) return Optional.empty();
+    return fixtures.stream()
+      .filter(fixture -> fixture.getId().getFixtureId().equals(fixtureId))
       .findFirst();
   }
 

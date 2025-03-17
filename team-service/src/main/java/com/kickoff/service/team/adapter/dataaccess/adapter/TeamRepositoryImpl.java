@@ -1,11 +1,13 @@
 package com.kickoff.service.team.adapter.dataaccess.adapter;
 
+import com.kickoff.service.common.domain.vo.LeagueId;
 import com.kickoff.service.team.adapter.dataaccess.repository.TeamJpaRepository;
 import com.kickoff.service.team.domain.entity.Team;
 import com.kickoff.service.team.domain.port.output.repository.TeamRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -22,5 +24,10 @@ public class TeamRepositoryImpl implements TeamRepository {
   @Override
   public Team save(Team team) {
     return teamJpaRepository.save(team);
+  }
+
+  @Override
+  public List<Team> findByLeagueId(LeagueId leagueId) {
+    return teamJpaRepository.findByLeagueId(leagueId);
   }
 }

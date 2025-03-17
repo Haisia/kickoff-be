@@ -1,0 +1,25 @@
+spring:
+  cloud:
+    function:
+      definition: fetchSeasonsForInitFixtures;fetchSeasonsForInitTeams;updateSeasonsForInitFixtures;initSeasonMapTeams
+    stream:
+      default:
+        contentType: application/json
+      bindings:
+        fetchSeasonsForInitFixtures-in-0:
+          destination: fetch-seasons-for-init-fixtures
+          group: init-fixtures
+        fetchTeamsForInitFixtures-out-0:
+          destination: fetch-teams-for-init-fixtures
+          group: init-fixtures
+        fetchSeasonsForInitTeams-in-0:
+          destination: fetch-seasons-for-init-teams
+          group: team-service
+        updateSeasonsForInitFixtures-in-0:
+          destination: update-seasons-for-init-fixtures
+          group: init-fixtures
+        initTeams-out-0:
+          destination: init-teams
+        initSeasonMapTeams-in-0:
+          destination: init-season-map-teams
+          group: team-service

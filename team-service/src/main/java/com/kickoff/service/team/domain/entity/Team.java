@@ -1,6 +1,7 @@
 package com.kickoff.service.team.domain.entity;
 
 import com.kickoff.service.common.domain.entity.AggregateRoot;
+import com.kickoff.service.common.domain.vo.LeagueId;
 import com.kickoff.service.common.domain.vo.UrlInfo;
 import com.kickoff.service.common.domain.vo.TeamId;
 import com.kickoff.service.common.domain.vo.UrlType;
@@ -29,6 +30,8 @@ public class Team extends AggregateRoot {
   private String country;
   private Integer founded;
   private Boolean national;
+
+  private LeagueId leagueId;
 
   @ElementCollection
   @CollectionTable(name = "team_logos", joinColumns = @JoinColumn(name = "team_id"))

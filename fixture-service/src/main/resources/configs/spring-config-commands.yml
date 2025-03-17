@@ -1,0 +1,18 @@
+spring:
+  cloud:
+    function:
+      definition: initFixtures;persistFixturesForInitFixtures
+    stream:
+      default:
+        contentType: application/json
+      bindings:
+        initFixtures-in-0:
+          destination: init-fixtures
+          group: init-fixtures
+        persistFixturesForInitFixtures-in-0:
+          destination: persist-fixtures-for-init-fixtures
+          group: init-fixtures
+        fetchSeasonsForInitFixtures-out-0:
+          destination: fetch-seasons-for-init-fixtures
+        updateSeasonsForInitFixtures-out-0:
+          destination: update-seasons-for-init-fixtures

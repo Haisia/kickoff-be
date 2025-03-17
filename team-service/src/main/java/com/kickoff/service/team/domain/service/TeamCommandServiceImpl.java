@@ -2,6 +2,7 @@ package com.kickoff.service.team.domain.service;
 
 import com.kickoff.service.common.application.constant.ApplicationConfigConstants;
 import com.kickoff.service.common.domain.vo.TeamId;
+import com.kickoff.service.common.dto.InitFixturesCommand;
 import com.kickoff.service.common.dto.InitTeamsCommand;
 import com.kickoff.service.team.domain.entity.Team;
 import com.kickoff.service.team.domain.port.input.command.TeamCommandService;
@@ -45,10 +46,19 @@ public class TeamCommandServiceImpl implements TeamCommandService {
           teamIds.add(optionalTeam.get().getId());
           continue;
         }
+        team.setLeagueId(initTeamsCommand.getLeagueId());
         teamIds.add(teamRepository.save(team).getId());
       }
       initTeamsCommand.addAllTeams(year, teamIds);
     }
     streamBridge.send("init-season-map-teams", initTeamsCommand);
+  }
+
+  @Override
+  public void fetchTeamsForInitFixtures(InitFixturesCommand initFixturesCommand) {
+    teamRepository.findByLeagueId(initFixturesCommand.getLeagueId()).forEach(team -> {
+      initFixturesCommand.addTeamId(team.getId(), team.getApiFootballTeamId());
+    });
+    streamBridge.send("persist-fixtures-for-init-fixtures", initFixturesCommand);
   }
 }

@@ -1,5 +1,6 @@
 package com.kickoff.service.common.dto;
 
+import com.kickoff.service.common.domain.vo.LeagueId;
 import com.kickoff.service.common.domain.vo.TeamId;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,6 +16,7 @@ import java.util.List;
 @Data
 public class InitTeamsCommand {
   private Integer apiFootballLeagueId;
+  private LeagueId leagueId;
   private List<Season> seasons = new ArrayList<>();
 
   public void addSeason(Year year) {

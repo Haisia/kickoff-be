@@ -1,5 +1,6 @@
 package com.kickoff.service.league.domain.service;
 
+import com.kickoff.service.common.dto.InitFixturesCommand;
 import com.kickoff.service.common.dto.InitTeamsCommand;
 import com.kickoff.service.league.domain.entity.League;
 import com.kickoff.service.league.domain.entity.Season;
@@ -55,10 +56,10 @@ public class LeagueCommandServiceImpl implements LeagueCommandService {
 
   @Override
   public void fetchSeasonsForInitTeams(InitTeamsCommand initTeamsCommand) {
-    leagueRepository.findByApiFootballLeagueId((long) initTeamsCommand.getApiFootballLeagueId())
-      .orElseThrow()
-      .getSeasons()
-      .forEach(season -> initTeamsCommand.addSeason(season.getId().getYear()));
+    League league = leagueRepository.findByApiFootballLeagueId((long) initTeamsCommand.getApiFootballLeagueId())
+      .orElseThrow();
+    initTeamsCommand.setLeagueId(league.getId());
+    league.getSeasons().forEach(season -> initTeamsCommand.addSeason(season.getId().getYear()));
     streamBridge.send("init-teams", initTeamsCommand);
   }
 
@@ -67,6 +68,22 @@ public class LeagueCommandServiceImpl implements LeagueCommandService {
     League league = leagueRepository.findByApiFootballLeagueId((long) initTeamsCommand.getApiFootballLeagueId()).orElseThrow();
     for (Year year : initTeamsCommand.getYears()) {
       initTeamsCommand.getTeams(year).forEach(teamId -> league.addTeam(year, teamId));
+    }
+  }
+
+  @Override
+  public void fetchSeasonsForInitFixture(InitFixturesCommand initFixturesCommand) {
+    League league = leagueRepository.findByApiFootballLeagueId(initFixturesCommand.getApiFootballLeagueId()).orElseThrow();
+    initFixturesCommand.setLeagueId(league.getId());
+    league.getSeasons().forEach(season -> initFixturesCommand.addSeason(season.getId().getYear()));
+    streamBridge.send("fetch-teams-for-init-fixtures", initFixturesCommand);
+  }
+
+  @Override
+  public void updateSeasonsForInitFixtures(InitFixturesCommand initFixturesCommand) {
+    League league = leagueRepository.findById(initFixturesCommand.getLeagueId()).orElseThrow();
+    for (Year year : initFixturesCommand.getYears()) {
+      initFixturesCommand.getFixtures(year).forEach(fixtureId -> league.addFixture(year, fixtureId));
     }
   }
 }

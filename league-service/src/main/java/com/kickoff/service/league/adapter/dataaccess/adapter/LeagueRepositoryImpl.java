@@ -1,5 +1,6 @@
 package com.kickoff.service.league.adapter.dataaccess.adapter;
 
+import com.kickoff.service.common.domain.vo.LeagueId;
 import com.kickoff.service.league.adapter.dataaccess.repository.LeagueJpaRepository;
 import com.kickoff.service.league.domain.entity.League;
 import com.kickoff.service.league.domain.port.output.repository.LeagueRepository;
@@ -13,6 +14,12 @@ import java.util.Optional;
 public class LeagueRepositoryImpl implements LeagueRepository {
 
   private final LeagueJpaRepository leagueJpaRepository;
+
+
+  @Override
+  public Optional<League> findById(LeagueId id) {
+    return leagueJpaRepository.findById(id);
+  }
 
   @Override
   public League save(League league) {

@@ -13,8 +13,7 @@ spring:
     name: league-service
 
   config:
-    import:
-      - classpath:commands/initTeams.yml
+    import: classpath:configs/spring-config-commands.yml
 
   jpa:
     open-in-view: false

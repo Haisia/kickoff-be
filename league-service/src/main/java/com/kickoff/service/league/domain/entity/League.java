@@ -1,6 +1,7 @@
 package com.kickoff.service.league.domain.entity;
 
 import com.kickoff.service.common.domain.entity.AggregateRoot;
+import com.kickoff.service.common.domain.vo.FixtureId;
 import com.kickoff.service.common.domain.vo.TeamId;
 import com.kickoff.service.common.domain.vo.UrlInfo;
 import com.kickoff.service.common.domain.vo.LeagueId;
@@ -12,10 +13,7 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.time.Year;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter @Setter
@@ -85,6 +83,22 @@ public class League extends AggregateRoot {
       .filter(season -> season.getId().getYear().equals(year))
       .findFirst()
       ;
+  }
+
+  public Set<TeamId> getAllTeamIdsInLeague() {
+    Set<TeamId> result = new HashSet<>();
+    for (Season season : seasons) {
+      season.getAffiliatedTeams()
+        .stream()
+        .map(smt->smt.getId().getTeamId())
+        .forEach(result::add);
+    }
+    return result;
+  }
+
+  public void addFixture(Year year, FixtureId fixtureId) {
+    Season season = getSeason(year).orElseThrow();
+    season.addFixture(fixtureId);
   }
 
   @Override
