@@ -101,6 +101,19 @@ public class Fixture extends AggregateRoot {
     fixtureStatistics.add(fixtureStatistic);
   }
 
+  public void updateOrAddFixtureStatistic(FixtureStatistic fixtureStatistic) {
+    if (fixtureStatus == null) return;
+    fixtureStatistics.stream()
+      .filter(fs ->
+        fs.getApiFootballTeamId().equals(fixtureStatistic.getApiFootballTeamId())
+        && fs.getType().equals(fixtureStatistic.getType())
+        )
+      .findFirst()
+      .ifPresentOrElse(
+        fs -> fs.setValue(fixtureStatistic.getValue()),
+        () -> addFixtureStatistic(fixtureStatistic));
+  }
+
   public boolean isNotStarted() {
     return getFixtureDateTime().getDate().isBefore(LocalDateTime.now());
   }

@@ -6,6 +6,7 @@ import com.kickoff.service.fixture.domain.port.output.repository.FixtureReposito
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,5 +34,10 @@ public class FixtureRepositoryImpl implements FixtureRepository {
   @Override
   public List<Fixture> findByApiFootballLeagueIdIn(List<Long> apiFootballLeagueIds) {
     return fixtureJpaRepository.findByApiFootballLeagueIdIn(apiFootballLeagueIds);
+  }
+
+  @Override
+  public List<Fixture> findLiveFixture() {
+    return fixtureJpaRepository.findByFixtureDateTime_DateBetween(LocalDateTime.now().minusMinutes(150), LocalDateTime.now().plusMinutes(150));
   }
 }

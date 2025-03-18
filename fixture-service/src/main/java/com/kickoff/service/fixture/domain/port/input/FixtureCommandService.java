@@ -7,4 +7,5 @@ public interface FixtureCommandService {
   void persistFixturesForInitFixtures(InitFixturesCommand initFixturesCommand);
 
   void initFixtureStatistics();
+  void updateLiveFixtures();
 }

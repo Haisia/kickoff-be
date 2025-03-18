@@ -3,6 +3,7 @@ package com.kickoff.service.fixture.domain.service;
 import com.kickoff.service.common.dto.InitFixturesCommand;
 import com.kickoff.service.fixture.domain.port.input.FixtureCommandService;
 import com.kickoff.service.fixture.domain.service.usecase.fixture.InitFixturesUseCase;
+import com.kickoff.service.fixture.domain.service.usecase.fixture.UpdateLiveFixturesUseCase;
 import com.kickoff.service.fixture.domain.service.usecase.fixture.statistics.InitFixtureStatisticsUseCase;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ public class FixtureCommandServiceImpl implements FixtureCommandService {
 
   private final InitFixturesUseCase initFixturesUseCase;
   private final InitFixtureStatisticsUseCase initFixtureStatisticsUseCase;
+  private final UpdateLiveFixturesUseCase updateLiveFixturesUseCase;
 
   @Override
   public void initFixtures() {
@@ -29,5 +31,9 @@ public class FixtureCommandServiceImpl implements FixtureCommandService {
   @Override
   public void initFixtureStatistics() {
     initFixtureStatisticsUseCase.initFixtureStatistics();
+  }
+
+  public void updateLiveFixtures() {
+    updateLiveFixturesUseCase.updateLiveFixtures();
   }
 }

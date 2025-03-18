@@ -10,4 +10,5 @@ public interface FixtureRepository {
   Fixture save(Fixture fixture);
   List<Fixture> findAll();
   List<Fixture> findByApiFootballLeagueIdIn(List<Long> apiFootballLeagueIds);
+  List<Fixture> findLiveFixture();
 }
