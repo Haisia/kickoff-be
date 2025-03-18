@@ -1,7 +1,6 @@
 package com.kickoff.service.fixture.domain.entity;
 
 import com.kickoff.service.common.domain.entity.BaseEntity;
-import com.kickoff.service.common.domain.vo.TeamId;
 import com.kickoff.service.fixture.domain.vo.FixtureStatisticId;
 import jakarta.persistence.*;
 import lombok.*;
@@ -16,15 +15,24 @@ public class FixtureStatistic extends BaseEntity {
   @EmbeddedId
   private FixtureStatisticId id;
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.ALL)
   @JoinColumn(name = "fixture_id")
   private Fixture fixture;
 
-  @AttributeOverride(name = "id", column = @Column(name = "team_id"))
-  private TeamId teamId;
+  private Long apiFootballTeamId;
 
   private String type;
   private String value;
+
+  @Builder
+  public FixtureStatistic(FixtureStatisticId id, Fixture fixture, Long apiFootballTeamId, String type, String value) {
+    if (id == null) id = FixtureStatisticId.generate();
+    this.id = id;
+    this.fixture = fixture;
+    this.apiFootballTeamId = apiFootballTeamId;
+    this.type = type;
+    this.value = value;
+  }
 
   @Override
   public boolean equals(Object o) {

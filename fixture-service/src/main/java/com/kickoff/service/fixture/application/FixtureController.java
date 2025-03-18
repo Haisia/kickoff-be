@@ -24,4 +24,9 @@ public class FixtureController {
     return ResponseEntity.status(HttpStatus.OK).body(null);
   }
 
+  @PostMapping("/statistics/init")
+  public ResponseEntity<?> initFixtureStatistics() {
+    fixtureCommandService.initFixtureStatistics();
+    return ResponseEntity.status(HttpStatus.OK).body(null);
+  }
 }

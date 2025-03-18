@@ -36,7 +36,7 @@ public class InitFixturesUseCase {
     initFixturesCommand.getTeamIdMap().forEach(tim -> teamIdMap.put(tim.getApiFootballFixtureId(), tim.getTeamId()));
 
     for (Year year : years) {
-      List<Fixture> fixtures = fixtureExternalApiService.getFixtures(initFixturesCommand.getLeagueId(), initFixturesCommand.getApiFootballLeagueId(), year, teamIdMap);
+      List<Fixture> fixtures = fixtureExternalApiService.getFixtures(initFixturesCommand.getApiFootballLeagueId(), year, teamIdMap);
       List<Long> apiFootballFixtureIds = new ArrayList<>();
       for (Fixture fixture : fixtures) {
         fixtureRepository.findByApiFootballFixtureId(fixture.getApiFootballFixtureId()).ifPresentOrElse(

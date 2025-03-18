@@ -6,6 +6,7 @@ import com.kickoff.service.fixture.domain.port.output.repository.FixtureReposito
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -22,5 +23,15 @@ public class FixtureRepositoryImpl implements FixtureRepository {
   @Override
   public Fixture save(Fixture fixture) {
     return fixtureJpaRepository.save(fixture);
+  }
+
+  @Override
+  public List<Fixture> findAll() {
+    return fixtureJpaRepository.findAll();
+  }
+
+  @Override
+  public List<Fixture> findByApiFootballLeagueIdIn(List<Long> apiFootballLeagueIds) {
+    return fixtureJpaRepository.findByApiFootballLeagueIdIn(apiFootballLeagueIds);
   }
 }

@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor @AllArgsConstructor
 @Data
 public class InitTeamsCommand {
-  private Integer apiFootballLeagueId;
+  private Long apiFootballLeagueId;
   private LeagueId leagueId;
   private List<Season> seasons = new ArrayList<>();
 

@@ -2,7 +2,6 @@ package com.kickoff.service.fixture.domain.entity;
 
 import com.kickoff.service.common.domain.entity.AggregateRoot;
 import com.kickoff.service.common.domain.vo.FixtureId;
-import com.kickoff.service.common.domain.vo.LeagueId;
 import com.kickoff.service.common.domain.vo.TeamId;
 import com.kickoff.service.fixture.domain.vo.FixtureDateTime;
 import com.kickoff.service.fixture.domain.vo.FixtureStatus;
@@ -10,6 +9,7 @@ import com.kickoff.service.fixture.domain.vo.Score;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDateTime;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,7 @@ public class Fixture extends AggregateRoot {
   @Column(unique = true)
   private Long apiFootballFixtureId;
 
-  private LeagueId leagueId;
+  private Long apiFootballLeagueId;
 
   private Year seasonYear;
 
@@ -76,11 +76,11 @@ public class Fixture extends AggregateRoot {
   private List<FixtureStatistic> fixtureStatistics = new ArrayList<>();
 
   @Builder
-  public Fixture(FixtureId id, Long apiFootballFixtureId, LeagueId leagueId, Year seasonYear, String referee, FixtureDateTime fixtureDateTime, String venue, FixtureStatus fixtureStatus, TeamId homeTeam, TeamId awayTeam, Score halfTimeScore, Score fullTimeScore, Score extraTimeScore, Score penaltyTimeScore) {
+  public Fixture(FixtureId id, Long apiFootballFixtureId, Long apiFootballLeagueId, Year seasonYear, String referee, FixtureDateTime fixtureDateTime, String venue, FixtureStatus fixtureStatus, TeamId homeTeam, TeamId awayTeam, Score halfTimeScore, Score fullTimeScore, Score extraTimeScore, Score penaltyTimeScore) {
     if (id == null) id = FixtureId.generate();
     this.id = id;
     this.apiFootballFixtureId = apiFootballFixtureId;
-    this.leagueId = leagueId;
+    this.apiFootballLeagueId = apiFootballLeagueId;
     this.seasonYear = seasonYear;
     this.referee = referee;
     this.fixtureDateTime = fixtureDateTime;
@@ -92,5 +92,16 @@ public class Fixture extends AggregateRoot {
     this.fullTimeScore = fullTimeScore;
     this.extraTimeScore = extraTimeScore;
     this.penaltyTimeScore = penaltyTimeScore;
+  }
+
+  public void addFixtureStatistic(FixtureStatistic fixtureStatistic) {
+    if (fixtureStatistic == null) return;
+    if (fixtureStatistics.contains(fixtureStatistic)) return;
+    fixtureStatistic.setFixture(this);
+    fixtureStatistics.add(fixtureStatistic);
+  }
+
+  public boolean isNotStarted() {
+    return getFixtureDateTime().getDate().isBefore(LocalDateTime.now());
   }
 }
