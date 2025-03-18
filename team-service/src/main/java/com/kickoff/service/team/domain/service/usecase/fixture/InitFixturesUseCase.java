@@ -1,4 +1,4 @@
-package com.kickoff.service.team.domain.service.usecase.team;
+package com.kickoff.service.team.domain.service.usecase.fixture;
 
 import com.kickoff.service.common.dto.InitFixturesCommand;
 import com.kickoff.service.team.domain.port.output.repository.TeamRepository;

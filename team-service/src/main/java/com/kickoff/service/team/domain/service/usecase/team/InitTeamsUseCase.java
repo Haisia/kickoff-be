@@ -1,4 +1,4 @@
-package com.kickoff.service.team.domain.service.usecase.fixture;
+package com.kickoff.service.team.domain.service.usecase.team;
 
 import com.kickoff.service.common.application.constant.ApplicationConfigConstants;
 import com.kickoff.service.common.domain.vo.TeamId;
