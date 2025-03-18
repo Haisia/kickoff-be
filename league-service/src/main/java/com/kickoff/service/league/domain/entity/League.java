@@ -100,6 +100,16 @@ public class League extends AggregateRoot {
     season.addFixture(apiFootballFixtureId);
   }
 
+  public void updateOrAddStanding(Year year, LeagueStanding leagueStanding) {
+    getSeason(year).orElseThrow().updateOrAddStanding(leagueStanding);
+  }
+
+  public Optional<Season> getCurrentSeason() {
+    return seasons.stream()
+      .filter(season -> season.getEndDate().isAfter(LocalDate.now()))
+      .findFirst();
+  }
+
   @Override
   public boolean equals(Object o) {
     if (o == null || getClass() != o.getClass()) return false;

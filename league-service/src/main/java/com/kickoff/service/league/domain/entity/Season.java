@@ -34,6 +34,9 @@ public class Season extends BaseEntity {
   @OneToMany(mappedBy = "season", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
   private List<SeasonMapFixtures> fixtures = new ArrayList<>();
 
+  @OneToMany(mappedBy = "season", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+  private List<LeagueStanding> standings = new ArrayList<>();
+
   @Builder
   public Season(SeasonId id, League league, LocalDate startDate, LocalDate endDate) {
     if (id == null) return;
@@ -67,6 +70,29 @@ public class Season extends BaseEntity {
     return fixtures.stream()
       .filter(fixture -> fixture.getId().getApiFootballFixtureId().equals(apiFootballFixtureId))
       .findFirst();
+  }
+
+  public void updateOrAddStanding(LeagueStanding leagueStanding) {
+    if (leagueStanding == null) return;
+    standings.stream()
+      .filter(standing -> standing.getApiFootballTeamId().equals(leagueStanding.getApiFootballTeamId()))
+      .findFirst()
+      .ifPresentOrElse(
+        standing -> {
+          if (leagueStanding.getRank() != null) standing.setRank(leagueStanding.getRank());
+          if (leagueStanding.getPoints() != null) standing.setPoints(leagueStanding.getPoints());
+          if (leagueStanding.getGoalsDiff() != null) standing.setGoalsDiff(leagueStanding.getGoalsDiff());
+          if (leagueStanding.getForm() != null) standing.setForm(leagueStanding.getForm());
+          if (leagueStanding.getStatus() != null) standing.setStatus(leagueStanding.getStatus());
+          if (leagueStanding.getAllMatchHistory() != null) standing.setAllMatchHistory(leagueStanding.getAllMatchHistory());
+          if (leagueStanding.getHomeMatchHistory() != null) standing.setHomeMatchHistory(leagueStanding.getHomeMatchHistory());
+          if (leagueStanding.getAwayMatchHistory() != null) standing.setAwayMatchHistory(leagueStanding.getAwayMatchHistory());
+        },
+        () -> {
+          leagueStanding.setSeason(this);
+          standings.add(leagueStanding);
+        }
+      );
   }
 
   @Override
