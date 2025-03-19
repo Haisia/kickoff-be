@@ -17,11 +17,18 @@ import org.springframework.web.bind.annotation.RestController;
 public class LeagueController {
 
   private final LeagueCommandService leagueCommandService;
+  private final LeagueBatch leagueBatch;
 
   @PostMapping("/init")
   public ResponseEntity<?> initLeague() {
     leagueCommandService.initLeague();
 
+    return ResponseEntity.status(HttpStatus.OK).body(null);
+  }
+
+  @PostMapping("/standings/init")
+  public ResponseEntity<?> initStandings() {
+    leagueBatch.updateLeagueStandings();
     return ResponseEntity.status(HttpStatus.OK).body(null);
   }
 }

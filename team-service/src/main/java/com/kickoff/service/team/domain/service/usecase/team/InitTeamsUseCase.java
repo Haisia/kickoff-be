@@ -40,7 +40,7 @@ public class InitTeamsUseCase {
           teamIds.add(optionalTeam.get().getId());
           continue;
         }
-        team.setLeagueId(initTeamsCommand.getLeagueId());
+        team.setApiFootballLeagueId(initTeamsCommand.getApiFootballLeagueId());
         teamIds.add(teamRepository.save(team).getId());
       }
       initTeamsCommand.addAllTeams(year, teamIds);

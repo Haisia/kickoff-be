@@ -14,9 +14,8 @@ public class InitFixturesUseCase {
   private final TeamRepository teamRepository;
 
   public void fetchTeams(InitFixturesCommand initFixturesCommand) {
-    teamRepository.findByLeagueId(initFixturesCommand.getLeagueId()).forEach(team -> {
-      initFixturesCommand.addTeamId(team.getId(), team.getApiFootballTeamId());
-    });
+    teamRepository.findByApiFootballLeagueId(initFixturesCommand.getApiFootballLeagueId())
+      .forEach(team -> initFixturesCommand.addTeamId(team.getId(), team.getApiFootballTeamId()));
     streamBridge.send("persist-fixtures-for-init-fixtures", initFixturesCommand);
   }
 }

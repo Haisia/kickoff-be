@@ -7,4 +7,5 @@ public interface TeamCommandService {
   void initTeams();
   void persistTeamsForInitTeams(InitTeamsCommand initTeamsCommand);
   void fetchTeamsForInitFixtures(InitFixturesCommand initFixturesCommand);
+  void updateTeamSquads(Long apiFootballTeamId);
 }

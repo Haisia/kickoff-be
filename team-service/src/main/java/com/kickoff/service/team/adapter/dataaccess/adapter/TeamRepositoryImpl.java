@@ -1,6 +1,5 @@
 package com.kickoff.service.team.adapter.dataaccess.adapter;
 
-import com.kickoff.service.common.domain.vo.LeagueId;
 import com.kickoff.service.team.adapter.dataaccess.repository.TeamJpaRepository;
 import com.kickoff.service.team.domain.entity.Team;
 import com.kickoff.service.team.domain.port.output.repository.TeamRepository;
@@ -27,7 +26,7 @@ public class TeamRepositoryImpl implements TeamRepository {
   }
 
   @Override
-  public List<Team> findByLeagueId(LeagueId leagueId) {
-    return teamJpaRepository.findByLeagueId(leagueId);
+  public List<Team> findByApiFootballLeagueId(Long apiFootballLeagueId) {
+    return teamJpaRepository.findByApiFootballLeagueId(apiFootballLeagueId);
   }
 }

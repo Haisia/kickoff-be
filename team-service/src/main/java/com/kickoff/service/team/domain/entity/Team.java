@@ -1,7 +1,6 @@
 package com.kickoff.service.team.domain.entity;
 
 import com.kickoff.service.common.domain.entity.AggregateRoot;
-import com.kickoff.service.common.domain.vo.LeagueId;
 import com.kickoff.service.common.domain.vo.UrlInfo;
 import com.kickoff.service.common.domain.vo.TeamId;
 import com.kickoff.service.common.domain.vo.UrlType;
@@ -31,7 +30,7 @@ public class Team extends AggregateRoot {
   private Integer founded;
   private Boolean national;
 
-  private LeagueId leagueId;
+  private Long apiFootballLeagueId;
 
   @ElementCollection
   @CollectionTable(name = "team_logos", joinColumns = @JoinColumn(name = "team_id"))
@@ -45,7 +44,7 @@ public class Team extends AggregateRoot {
   private List<Venue> venues = new ArrayList<>();
 
   @OneToMany(mappedBy = "currentTeam", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  private List<Player> players = new ArrayList<>();
+  private List<Player> teamSquads = new ArrayList<>();
 
   @Builder
   public Team(TeamId id, Long apiFootballTeamId, String name, String code, String country, Integer founded, Boolean national) {
@@ -70,6 +69,12 @@ public class Team extends AggregateRoot {
     if (venues.contains(venue)) return;
     venues.add(venue);
     venue.setTeam(this);
+  }
+
+  public void addTeamSquad(Player player) {
+    if (player == null) return;
+    player.setCurrentTeam(this);
+    teamSquads.add(player);
   }
 
   @Override

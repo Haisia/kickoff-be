@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+@ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter @Setter
 @Table(name = "players")
@@ -50,6 +51,8 @@ public class Player extends BaseEntity {
   }
 
   public void addPhoto(UrlInfo photo) {
+    if (photo == null) return;
+    if (this.photo.contains(photo)) return;
     this.photo.add(photo);
   }
 

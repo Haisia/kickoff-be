@@ -17,7 +17,7 @@ public class InitTeamsUseCase {
   private final StreamBridge streamBridge;
 
   public void fetchSeasons(InitTeamsCommand initTeamsCommand) {
-    League league = leagueRepository.findByApiFootballLeagueId((long) initTeamsCommand.getApiFootballLeagueId())
+    League league = leagueRepository.findByApiFootballLeagueId(initTeamsCommand.getApiFootballLeagueId())
       .orElseThrow();
     initTeamsCommand.setLeagueId(league.getId());
     league.getSeasons().forEach(season -> initTeamsCommand.addSeason(season.getId().getYear()));
@@ -25,7 +25,7 @@ public class InitTeamsUseCase {
   }
 
   public void persistSeasonMapTeamsForInitTeams(InitTeamsCommand initTeamsCommand) {
-    League league = leagueRepository.findByApiFootballLeagueId((long) initTeamsCommand.getApiFootballLeagueId()).orElseThrow();
+    League league = leagueRepository.findByApiFootballLeagueId(initTeamsCommand.getApiFootballLeagueId()).orElseThrow();
     for (Year year : initTeamsCommand.getYears()) {
       initTeamsCommand.getTeams(year).forEach(teamId -> league.addTeam(year, teamId));
     }

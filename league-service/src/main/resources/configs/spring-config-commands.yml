@@ -5,7 +5,7 @@ spring:
         fetchSeasonsForInitFixtures;
         fetchSeasonsForInitTeams;
         updateSeasonsForInitFixtures;
-        initSeasonMapTeams
+        persistSeasonMapTeamsForInitTeams
     stream:
       default:
         contentType: application/json
